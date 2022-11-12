@@ -1,9 +1,9 @@
 /**
- * This program calculates a factorial using recursion.
+ * This program finds an item using binary search.
  *
  * By:      Aidan Lalonde-Novales
  * Version: 1.0
- * Since:   2022-11-09
+ * Since:   2022-11-12
  */
 
 import promptSync from 'prompt-sync'
@@ -11,18 +11,36 @@ import promptSync from 'prompt-sync'
 const prompt = promptSync()
 
 /**
- * Calulates a factorial using recursion.
+ * Binary Search Function.
  *
- * @param {number} userInt input from main
- * @returns {number} accurate calculation
+ * @param {number[]} numArray - all numbers to be searched through.
+ * @param {number} target - number being requested by the user.
+ * @param {number} min - lowest point in the array.
+ * @param {number} max - highest point in the array.
+ * @returns {number} the array index that matches the target.
  */
-function factorial(userInt: number): number {
-  if (userInt < 0) {
+function binarySearch(
+  numArray: number[],
+  target: number,
+  min: number,
+  max: number
+): number {
+  // base case to prevent infinite loop
+  if (min > max) {
     return -1
-  } else if (userInt === 0) {
-    return 1
+  }
+
+  const middle = Math.floor((min + max) / 2)
+
+  // true if target equals the matching index
+  if (numArray[middle] === target) {
+    return middle
+  // searches in the lower half if middle > target
+  } else if (numArray[middle] > target) {
+    return binarySearch(numArray, target, min, middle - 1)
+  // searches in the upper half if middle < target
   } else {
-    return userInt * factorial(userInt - 1)
+    return binarySearch(numArray, target, middle + 1, min)
   }
 }
 
