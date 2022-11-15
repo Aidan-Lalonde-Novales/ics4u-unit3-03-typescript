@@ -3,7 +3,7 @@
  *
  * By:      Aidan Lalonde-Novales
  * Version: 1.0
- * Since:   2022-11-12
+ * Since:   2022-11-15
  */
 
 import promptSync from 'prompt-sync'
@@ -30,29 +30,52 @@ function binarySearch(
     return -1
   }
 
-  const middle = Math.floor((min + max) / 2)
+  const mid = Math.floor((min + max) / 2)
 
   // true if target equals the matching index
-  if (numArray[middle] === target) {
-    return middle
+  if (numArray[mid] === target) {
+    return mid
   // searches in the lower half if middle > target
-  } else if (numArray[middle] > target) {
-    return binarySearch(numArray, target, min, middle - 1)
+  } else if (numArray[mid] > target) {
+    return binarySearch(numArray, target, min, mid - 1)
   // searches in the upper half if middle < target
   } else {
-    return binarySearch(numArray, target, middle + 1, min)
+    return binarySearch(numArray, target, mid + 1, max)
   }
 }
 
-// Input
-const userInput = prompt('enter factorial: ')
-const userInt = parseInt(userInput)
+// declares constants
+const MIN = 1
+const MAX = 999
+const ARRAY_SIZE = 250
 
-// Process and Output
-if (!isNaN(userInt)) {
-  console.log(`\n${userInt}! = ${factorial(userInt)}`)
-} else {
-  console.log('\nPlease enter an integer next time.')
+const randomNumArray = new Array(ARRAY_SIZE)
+
+for (let counter = 0; counter < randomNumArray.length; counter++) {
+  randomNumArray[counter] = Math.floor(Math.random() * MAX + MIN)
 }
+
+randomNumArray.sort(function (a, b) {
+  return a - b
+})
+
+console.log('Sorted Array: ')
+
+for (let counter = 0; counter < randomNumArray.length; counter++) {
+  process.stdout.write(`${String(randomNumArray[counter])}, `)
+}
+
+console.log('\n')
+
+const numInput = Number(prompt('Enter a number to search for (0 - 999): '))
+
+console.log(
+  `${numInput} is in index ${binarySearch(
+    randomNumArray,
+    numInput,
+    0,
+    ARRAY_SIZE - 1
+  )}.`
+)
 
 console.log('\nDone.')
