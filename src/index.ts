@@ -35,10 +35,10 @@ function binarySearch(
   // true if target equals the matching index
   if (numArray[mid] === target) {
     return mid
-  // searches in the lower half if middle > target
+    // searches in the lower half if middle > target
   } else if (numArray[mid] > target) {
     return binarySearch(numArray, target, min, mid - 1)
-  // searches in the upper half if middle < target
+    // searches in the upper half if middle < target
   } else {
     return binarySearch(numArray, target, mid + 1, max)
   }
